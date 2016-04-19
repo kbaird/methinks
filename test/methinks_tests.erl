@@ -1,4 +1,4 @@
--module('methinks_test').
+-module('methinks_tests').
 -author('KevinBaird').
 
 -include_lib("eunit/include/eunit.hrl").
