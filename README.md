@@ -11,7 +11,11 @@ Build
 
     $ rebar3 compile
 
-Test
+Testing
 -----
+
+    $ rebar3 ct
+
+or
 
     $ rebar3 eunit
