@@ -1,10 +1,9 @@
 methinks
+=====
 
 [![Build Status](
   https://semaphoreci.com/api/v1/kbaird/methinks/branches/master/badge.svg)]
   (https://semaphoreci.com/kbaird/methinks)
-
-=====
 
 An OTP library
 
