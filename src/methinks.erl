@@ -8,7 +8,7 @@
 -export([select_fittest/2]).
 -endif.
 
--include_lib("proper/include/proper.hrl").
+%-include_lib("proper/include/proper.hrl").
 -include_lib("../src/methinks.hrl").
 
 % suppress nuisance warning from EUnit vs. Dialyzer
