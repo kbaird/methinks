@@ -31,7 +31,7 @@ handle_call({Target, Parent}, _From, _LoopData) ->
     {reply, select_fittest(Target, Children), not_used}.
 
 
--spec mutate() -> pos_integer().
+-spec mutate() -> neg_integer().
 mutate() ->
     Candidate = make_initial_candidate(?DEFAULT_TARGET),
     GenNum    = mutate(?DEFAULT_TARGET, Candidate, 0),
