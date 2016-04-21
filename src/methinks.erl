@@ -11,10 +11,6 @@
 %-include_lib("proper/include/proper.hrl").
 -include_lib("../src/methinks.hrl").
 
-% suppress nuisance warning from EUnit vs. Dialyzer
-% Cf. http://erlang.2086793.n4.nabble.com/Eunit-assert-causes-Dialyzer-warning-td2252010.html
--dialyzer({nowarn_function, select_fittest_test/0}).
-
 %%% GEN_SERVER
 
 -behavior(gen_server).
