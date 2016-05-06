@@ -19,7 +19,7 @@
 code_change(_, _, _) -> {error,   not_implemented}.
 handle_cast(_, _)    -> {noreply, not_implemented}.
 handle_info(_, _)    -> {noreply, not_implemented}.
-init(_)              -> {ok,      null}.
+init(_)              -> {ok,      {target, ?DEFAULT_TARGET}}.
 terminate(_, _)      -> {noreply, not_implemented}.
 
 %%====================================================================
