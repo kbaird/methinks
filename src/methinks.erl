@@ -70,7 +70,7 @@ get_fittest_child(Target, Candidate) ->
 
 -spec get_random_char(any()) -> char().
 get_random_char(_) ->
-    random:uniform(length(?ALPHABET)) + ?LETTER_OFFSET.
+    rand:uniform(length(?ALPHABET)) + ?LETTER_OFFSET.
 
 -spec make_initial_candidate(string()) -> string().
 make_initial_candidate(X) ->
