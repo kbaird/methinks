@@ -9,7 +9,7 @@
 -endif.
 
 %-include_lib("proper/include/proper.hrl").
--include_lib("../src/methinks.hrl").
+-include_lib("methinks.hrl").
 
 %%% GEN_SERVER
 
