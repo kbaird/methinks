@@ -81,8 +81,8 @@ mutation_variance() -> rand:uniform(?MAX_MUTATION * 2) - (?MAX_MUTATION - 1).
 
 -spec propagate(string()) -> [string(), ...].
 propagate(Candidate) ->
-    GenCounts = lists:seq(1, ?DEFAULT_GEN_SIZE),
-    Children  = [ mutate_candidate(Candidate) || _Cnt <- GenCounts ],
+    Candidates = lists:duplicate(?DEFAULT_GEN_SIZE, Candidate),
+    Children   = lists:map(fun mutate_candidate/1, Candidates),
     [Candidate|Children].
 
 -spec random_char(any()) -> char().
