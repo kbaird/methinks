@@ -1,5 +1,4 @@
-methinks
-=====
+# methinks
 
 [![Build Status](
   https://semaphoreci.com/api/v1/kbaird/methinks/branches/master/badge.svg)]
@@ -10,16 +9,18 @@ An OTP library
 Implements the "methinksitislikeaweasel" exercise from Richard Dawkins'
 _The Blind Watchmaker_.
 
-Build
------
+## Build
 
     $ rebar3 compile
 
-Testing
------
+## Testing
 
     $ rebar3 ct
 
 or
 
     $ rebar3 eunit
+
+## Style
+
+    $ ./elvis rock
