@@ -65,13 +65,9 @@ fittest_child(Target, Candidate) ->
     gen_server:start_link({local, ?MODULE}, ?MODULE, InitArgs, Opts),
     gen_server:call(?MODULE, {Target, Candidate}).
 
--spec get_random_char(any()) -> char().
-get_random_char(_) ->
-    rand:uniform(length(?ALPHABET)) + ?LETTER_OFFSET.
-
 -spec make_initial_candidate(string()) -> string().
 make_initial_candidate(Target) ->
-    lists:map(fun get_random_char/1, Target).
+    lists:map(fun random_char/1, Target).
 
 -spec mutate_candidate(string()) -> string().
 mutate_candidate(Candidate) ->
@@ -92,6 +88,9 @@ propagate(Candidate) ->
     GenCounts = lists:seq(1, ?DEFAULT_GEN_SIZE),
     Children  = [ mutate_candidate(Candidate) || _Cnt <- GenCounts ],
     [Candidate|Children].
+
+-spec random_char(any()) -> char().
+random_char(_) -> rand:uniform(length(?ALPHABET)) + ?LETTER_OFFSET.
 
 report_progress(Candidate, GenNum) when GenNum rem ?REPORT_CHUNK_SIZE =:= 0 ->
     io:fwrite("String #~p = ~s\n", [GenNum, Candidate]);
