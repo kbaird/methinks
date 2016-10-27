@@ -51,8 +51,7 @@ mutate(Target,  Candidate, GenNum) ->
     mutate(Target, Fittest, GenNum + 1).
 
 -spec closer_to_fun(string()) -> fun((string(), string()) -> boolean()).
-closer_to_fun(Target) ->
-    fun(X, Y) -> deviance(X, Target) < deviance(Y, Target) end.
+closer_to_fun(Target) -> fun(X, Y) -> deviance(X, Target) < deviance(Y, Target) end.
 
 -spec deviance(string(), string()) -> pos_integer().
 % Quantify how different the strings L1 and L2 are, not exactly Levenshtein
@@ -66,12 +65,10 @@ fittest_child(Target, Candidate) ->
     gen_server:call(?MODULE, {Target, Candidate}).
 
 -spec make_initial_candidate(string()) -> string().
-make_initial_candidate(Target) ->
-    lists:map(fun random_char/1, Target).
+make_initial_candidate(Target) -> lists:map(fun random_char/1, Target).
 
 -spec mutate_candidate(string()) -> string().
-mutate_candidate(Candidate) ->
-    lists:map(fun mutate_char/1, Candidate).
+mutate_candidate(Candidate) -> lists:map(fun mutate_char/1, Candidate).
 
 -spec mutate_char(char()) -> char().
 mutate_char(Char) ->
@@ -80,8 +77,7 @@ mutate_char(Char) ->
     _NewChar = lists:max([NewChar2, $a]).
 
 -spec mutation_variance() -> integer().
-mutation_variance() ->
-    rand:uniform(?MAX_MUTATION * 2) - (?MAX_MUTATION - 1).
+mutation_variance() -> rand:uniform(?MAX_MUTATION * 2) - (?MAX_MUTATION - 1).
 
 -spec propagate(string()) -> [string(), ...].
 propagate(Candidate) ->
