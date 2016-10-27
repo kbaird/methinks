@@ -47,7 +47,7 @@ mutate() ->
 mutate(_Target, _Target,   GenNum) -> GenNum;
 mutate(Target,  Candidate, GenNum) ->
     report_progress(Candidate, GenNum),
-    Fittest = get_fittest_child(Target, Candidate),
+    Fittest = fittest_child(Target, Candidate),
     mutate(Target, Fittest, GenNum + 1).
 
 -spec closer_to_fun(string()) -> fun((string(), string()) -> boolean()).
@@ -59,8 +59,8 @@ closer_to_fun(Target) ->
 deviance(L1, L1) -> 0;
 deviance(L1, L2) -> lists:sum([erlang:abs(H1 - H2) || {H1, H2} <- lists:zip(L1, L2)]).
 
--spec get_fittest_child(string(), string()) -> string().
-get_fittest_child(Target, Candidate) ->
+-spec fittest_child(string(), string()) -> string().
+fittest_child(Target, Candidate) ->
     {InitArgs, Opts} = {[], []}, % http://www.erlang.org/doc/man/gen_server.html
     gen_server:start_link({local, ?MODULE}, ?MODULE, InitArgs, Opts),
     gen_server:call(?MODULE, {Target, Candidate}).
