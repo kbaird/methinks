@@ -55,8 +55,9 @@ closer_to_fun(Target) ->
     fun(X, Y) -> deviance(X, Target) < deviance(Y, Target) end.
 
 -spec deviance(string(), string()) -> pos_integer().
-deviance(L1, L2) ->
-    lists:sum([ erlang:abs(H1 - H2) || {H1, H2} <- lists:zip(L1, L2) ]).
+% Quantify how different the strings L1 and L2 are, not exactly Levenshtein
+deviance(L1, L1) -> 0;
+deviance(L1, L2) -> lists:sum([erlang:abs(H1 - H2) || {H1, H2} <- lists:zip(L1, L2)]).
 
 -spec get_fittest_child(string(), string()) -> string().
 get_fittest_child(Target, Candidate) ->
@@ -69,8 +70,8 @@ get_random_char(_) ->
     rand:uniform(length(?ALPHABET)) + ?LETTER_OFFSET.
 
 -spec make_initial_candidate(string()) -> string().
-make_initial_candidate(X) ->
-    lists:map(fun get_random_char/1, X).
+make_initial_candidate(Target) ->
+    lists:map(fun get_random_char/1, Target).
 
 -spec mutate_candidate(string()) -> string().
 mutate_candidate(Candidate) ->
