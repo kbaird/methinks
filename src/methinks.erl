@@ -33,6 +33,8 @@ handle_call({Target, Parent}, _From, _LoopData) ->
 
 -spec mutate() -> pos_integer().
 mutate() ->
+    {InitArgs, Opts} = {[], []}, % http://www.erlang.org/doc/man/gen_server.html
+    gen_server:start_link({local, ?MODULE}, ?MODULE, InitArgs, Opts),
     Candidate = make_initial_candidate(?DEFAULT_TARGET),
     GenNum    = mutate(?DEFAULT_TARGET, Candidate, 0),
     io:fwrite("I match after ~p mutations\n", [GenNum]),
@@ -60,8 +62,6 @@ deviance(L1, L2) -> lists:sum([erlang:abs(H1 - H2) || {H1, H2} <- lists:zip(L1, 
 
 -spec fittest_child(string(), string()) -> string().
 fittest_child(Target, Candidate) ->
-    {InitArgs, Opts} = {[], []}, % http://www.erlang.org/doc/man/gen_server.html
-    gen_server:start_link({local, ?MODULE}, ?MODULE, InitArgs, Opts),
     gen_server:call(?MODULE, {Target, Candidate}).
 
 -spec make_initial_candidate(string()) -> string().
