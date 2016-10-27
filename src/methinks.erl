@@ -35,10 +35,10 @@ handle_call({Target, Parent}, _From, _LoopData) ->
 mutate() ->
     {InitArgs, Opts} = {[], []}, % http://www.erlang.org/doc/man/gen_server.html
     gen_server:start_link({local, ?MODULE}, ?MODULE, InitArgs, Opts),
-    Candidate = make_initial_candidate(?DEFAULT_TARGET),
-    GenNum    = mutate(?DEFAULT_TARGET, Candidate, 0),
-    io:fwrite("I match after ~p mutations\n", [GenNum]),
-    GenNum.
+    Candidate     = make_initial_candidate(?DEFAULT_TARGET),
+    GenerationNum = mutate(?DEFAULT_TARGET, Candidate, 0),
+    io:fwrite("I match after ~p generations\n", [GenerationNum]),
+    GenerationNum.
 
 
 %%====================================================================
@@ -46,11 +46,11 @@ mutate() ->
 %%====================================================================
 
 -spec mutate(string(), string(), non_neg_integer()) -> non_neg_integer().
-mutate(_Target, _Target,   GenNum) -> GenNum;
-mutate(Target,  Candidate, GenNum) ->
-    report_progress(Candidate, GenNum),
+mutate(_Target, _Target,   GenerationNum) -> GenerationNum;
+mutate(Target,  Candidate, GenerationNum) ->
+    report_progress(Candidate, GenerationNum),
     Fittest = fittest_child(Target, Candidate),
-    mutate(Target, Fittest, GenNum + 1).
+    mutate(Target, Fittest, GenerationNum + 1).
 
 -spec closer_to_fun(string()) -> fun((string(), string()) -> boolean()).
 closer_to_fun(Target) -> fun(X, Y) -> deviance(X, Target) < deviance(Y, Target) end.
@@ -88,9 +88,9 @@ propagate(Candidate) ->
 -spec random_char(any()) -> char().
 random_char(_) -> rand:uniform(length(?ALPHABET)) + ?LETTER_OFFSET.
 
-report_progress(Candidate, GenNum) when GenNum rem ?REPORT_CHUNK_SIZE =:= 0 ->
-    io:fwrite("String #~p = ~s\n", [GenNum, Candidate]);
-report_progress(_Candidate, _GenNum) -> skip_reporting.
+report_progress(Candidate, GenerationNum) when GenerationNum rem ?REPORT_CHUNK_SIZE =:= 0 ->
+    io:fwrite("String #~p = ~s\n", [GenerationNum, Candidate]);
+report_progress(_Candidate, _GenerationNum) -> skip_reporting.
 
 -spec select_fittest(string(), [string(), ...]) -> string().
 select_fittest(Target, Candidates) ->
