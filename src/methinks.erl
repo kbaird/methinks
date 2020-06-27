@@ -52,9 +52,6 @@ mutate(Target,  Candidate, GenerationNum) ->
     Fittest = fittest_child(Target, Candidate),
     mutate(Target, Fittest, GenerationNum + 1).
 
--spec closer_to_fun(string()) -> fun((string(), string()) -> boolean()).
-closer_to_fun(Target) -> fun(X, Y) -> deviance(X, Target) < deviance(Y, Target) end.
-
 -spec deviance(string(), string()) -> pos_integer().
 % Quantify how different the strings L1 and L2 are, not exactly Levenshtein
 deviance(L1, L1) -> 0;
@@ -94,5 +91,5 @@ report_progress(_Candidate, _GenerationNum) -> skip_reporting.
 
 -spec select_fittest(string(), [string(), ...]) -> string().
 select_fittest(Target, Candidates) ->
-    Closer   = closer_to_fun(Target),
+    Closer   = fun(X, Y) -> deviance(X, Target) < deviance(Y, Target) end,
     _Fittest = hd(lists:sort(Closer, Candidates)).
