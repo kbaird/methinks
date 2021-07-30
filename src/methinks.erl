@@ -46,8 +46,8 @@ mutate() ->
 %%====================================================================
 
 -spec mutate(string(), string(), non_neg_integer()) -> non_neg_integer().
-mutate(_Target, _Target,   GenerationNum) -> GenerationNum;
-mutate(Target,  Candidate, GenerationNum) ->
+mutate(Target, Target,    GenerationNum) -> GenerationNum;
+mutate(Target, Candidate, GenerationNum) ->
     report_progress(Candidate, GenerationNum),
     Fittest = fittest_child(Target, Candidate),
     mutate(Target, Fittest, GenerationNum + 1).
