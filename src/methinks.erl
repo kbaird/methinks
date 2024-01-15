@@ -26,7 +26,7 @@ terminate(_, _)      -> {noreply, not_implemented}.
 %% API functions
 %%====================================================================
 
-handle_call({Target, Parent}, _From, _LoopData) ->
+handle_call({fittest_child, Target, Parent}, _From, _LoopData) ->
     Children = propagate(Parent),
     {reply, select_fittest(Target, Children), not_used}.
 
@@ -59,7 +59,7 @@ deviance(L1, L2) -> lists:sum([erlang:abs(H1 - H2) || {H1, H2} <- lists:zip(L1, 
 
 -spec fittest_child(string(), string()) -> string().
 fittest_child(Target, Candidate) ->
-    gen_server:call(?MODULE, {Target, Candidate}).
+    gen_server:call(?MODULE, {fittest_child, Target, Candidate}).
 
 -spec make_initial_candidate(string()) -> string().
 make_initial_candidate(Target) -> lists:map(fun random_char/1, Target).
@@ -91,5 +91,5 @@ report_progress(_Candidate, _GenerationNum) -> skip_reporting.
 
 -spec select_fittest(string(), [string(), ...]) -> string().
 select_fittest(Target, Candidates) ->
-    Closer   = fun(X, Y) -> deviance(X, Target) < deviance(Y, Target) end,
-    _Fittest = hd(lists:sort(Closer, Candidates)).
+    Closer = fun(X, Y) -> deviance(X, Target) < deviance(Y, Target) end,
+    hd(lists:sort(Closer, Candidates)).
